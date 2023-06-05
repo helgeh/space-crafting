@@ -1,9 +1,3 @@
-# Fabric Example Mod
+# Space(bar) Crafting
 
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+This mod adds the ability to use the spacebar to reload the last recipe used, just like with villagers in vanilla Minecraft.
