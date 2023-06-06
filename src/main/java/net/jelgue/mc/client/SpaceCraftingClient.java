@@ -7,6 +7,6 @@ public class SpaceCraftingClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         // System.out.println("Client initializer");
-        Recraftinator.init();
+        Recraftinator.getInstance();
     }
 }

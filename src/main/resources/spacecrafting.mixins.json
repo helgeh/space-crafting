@@ -9,7 +9,8 @@
     "ClientPlayerInteractionManagerMixin",
     "CraftingScreenHandlerMixin",
     "PlayerScreenHandlerMixin",
-    "CraftingResultSlotMixin"
+    "CraftingResultSlotMixin",
+    "RecipeBookWidgetMixin"
   ],
   "injectors": {
     "defaultRequire": 1

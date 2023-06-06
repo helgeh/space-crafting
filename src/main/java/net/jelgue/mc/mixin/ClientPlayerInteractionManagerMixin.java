@@ -14,7 +14,7 @@ public class ClientPlayerInteractionManagerMixin {
 	@Inject(method = "clickRecipe", at = @At("RETURN"))
 	public void clickRecipe(int syncId, Recipe<?> recipe, boolean craftAll, CallbackInfo info) {
 		// System.out.println("Recipe clicked!");
-        Recraftinator.onRecipeClicked(recipe);
+        Recraftinator.getInstance().onRecipeClicked(recipe);
 	}
 
 }

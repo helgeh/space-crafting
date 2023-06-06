@@ -14,7 +14,7 @@ public class CraftingScreenHandlerMixin {
     @Inject(method = "onClosed", at = @At("RETURN"))
     public void onClosed(PlayerEntity player, CallbackInfo ci) {
         // System.out.println("CraftingScreen Closed!");
-        Recraftinator.onScreenClosed();
+        Recraftinator.getInstance().onScreenClosed();
     }
 
 //    @Inject(method = "onContentChanged", at = @At("RETURN"))

@@ -1,20 +1,25 @@
 package net.jelgue.mc.client;
 
+import fi.dy.masa.malilib.event.InputEventHandler;
+import fi.dy.masa.malilib.hotkeys.IKeyboardInputHandler;
+import fi.dy.masa.malilib.util.KeyCodes;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.recipe.Recipe;
-import org.lwjgl.glfw.GLFW;
+import net.minecraft.screen.ScreenHandler;
 
-public class Recraftinator {
+public class Recraftinator implements IKeyboardInputHandler {
 
-    private static Recipe<?> lastRecipe;
-    private static boolean recipeReLoaded = false;
+    private static final Recraftinator INSTANCE = new Recraftinator();
+    private static boolean ghosting;
 
-    public static void init() {
+    private Recipe<?> lastRecipe;
+    private boolean spacePressed = false;
+
+    private Recraftinator() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (!isValidWorld(client))
                 return;
@@ -22,39 +27,62 @@ public class Recraftinator {
                 return;
             if (lastRecipe == null)
                 return;
-            while (isSpacePressed() && !recipeReLoaded) {
+            if (wasSpacePressed()) {
+                if (ghosting) {
+                    //System.out.println("In GHOST mode, recipe cancelled");
+                    return;
+                }
                 // System.out.println("Reloading last recipe!");
                 loadRecipe(lastRecipe);
             }
         });
+
+        InputEventHandler.getInputManager().registerKeyboardInputHandler(this);
     }
 
-    public static void onRecipeClicked(Recipe<?> recipe) {
+    public static Recraftinator getInstance() {
+        return INSTANCE;
+    }
+
+    public static void setGhosting(boolean b) {
+        ghosting = b;
+    }
+
+    public boolean onKeyInput(int keyCode, int scanCode, int modifiers, boolean eventKeyState) {
+        if (keyCode == KeyCodes.KEY_SPACE && eventKeyState)
+            spacePressed = true;
+        return false;
+    }
+
+    public void onRecipeClicked(Recipe<?> recipe) {
         if (recipe != null) {
             // System.out.println("Setting new Last Recipe " + recipe.getId());
+            ghosting = false;
             lastRecipe = recipe;
-            recipeReLoaded = false;
         }
     }
 
-    public static void onScreenClosed() {
+    public void onScreenClosed() {
+        ghosting = false;
         lastRecipe = null;
-        recipeReLoaded = false;
     }
 
-    public static void onResultTaken() {
-        recipeReLoaded = false;
+    public void onResultTaken() {
+        // recipeReLoaded = false;
     }
 
-    private static boolean isValidScreen(MinecraftClient client) {
+    private boolean isValidScreen(MinecraftClient client) {
         ClientPlayerEntity ply = client.player;
+        ScreenHandler sh = ply.currentScreenHandler;
+        if (sh == null)
+            return false;
         ClientPlayerInteractionManager im = client.interactionManager;
         if (im == null)
             return false;
         return true;
     }
 
-    private static boolean isValidWorld(MinecraftClient client) {
+    private boolean isValidWorld(MinecraftClient client) {
         if (client.player == null || client.player.world == null)
             return false;
         if (!client.player.world.isClient())
@@ -62,17 +90,21 @@ public class Recraftinator {
         return true;
     }
 
-    private static void loadRecipe(Recipe<?> lastRecipe) {
+    private void loadRecipe(Recipe<?> lastRecipe) {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity ply = client.player;
         ClientPlayerInteractionManager im = client.interactionManager;
         if (im == null)
             return;
         im.clickRecipe(ply.currentScreenHandler.syncId, lastRecipe, Screen.hasShiftDown());
-        recipeReLoaded = true;
     }
 
-    private static boolean isSpacePressed() {
-        return InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_SPACE);
+    private boolean wasSpacePressed() {
+        // return InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_SPACE);
+        if (spacePressed) {
+            spacePressed = false;
+            return true;
+        }
+        return false;
     }
 }
