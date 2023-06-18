@@ -83,9 +83,9 @@ public class Recraftinator implements IKeyboardInputHandler {
     }
 
     private boolean isValidWorld(MinecraftClient client) {
-        if (client.player == null || client.player.world == null)
+        if (client.player == null || client.player.getWorld() == null)
             return false;
-        if (!client.player.world.isClient())
+        if (!client.player.getWorld().isClient())
             return false;
         return true;
     }
