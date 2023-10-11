@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.ScreenHandler;
 
 public class Recraftinator implements IKeyboardInputHandler {
@@ -16,7 +17,7 @@ public class Recraftinator implements IKeyboardInputHandler {
     private static final Recraftinator INSTANCE = new Recraftinator();
     private static boolean ghosting;
 
-    private Recipe<?> lastRecipe;
+    private RecipeEntry<?> lastRecipe;
     private boolean spacePressed = false;
 
     private Recraftinator() {
@@ -54,7 +55,7 @@ public class Recraftinator implements IKeyboardInputHandler {
         return false;
     }
 
-    public void onRecipeClicked(Recipe<?> recipe) {
+    public void onRecipeClicked(RecipeEntry<?> recipe) {
         if (recipe != null) {
             // System.out.println("Setting new Last Recipe " + recipe.getId());
             ghosting = false;
@@ -83,14 +84,14 @@ public class Recraftinator implements IKeyboardInputHandler {
     }
 
     private boolean isValidWorld(MinecraftClient client) {
-        if (client.player == null || client.player.getWorld() == null)
+        if (client.world == null)
             return false;
-        if (!client.player.getWorld().isClient())
+        if (!client.world.isClient())
             return false;
         return true;
     }
 
-    private void loadRecipe(Recipe<?> lastRecipe) {
+    private void loadRecipe(RecipeEntry<?> lastRecipe) {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity ply = client.player;
         ClientPlayerInteractionManager im = client.interactionManager;

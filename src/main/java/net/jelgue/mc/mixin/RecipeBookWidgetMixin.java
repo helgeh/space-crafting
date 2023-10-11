@@ -2,7 +2,7 @@ package net.jelgue.mc.mixin;
 
 import net.jelgue.mc.client.Recraftinator;
 import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
-import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.slot.Slot;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,7 +28,7 @@ public class RecipeBookWidgetMixin {
     }
 
     @Inject(method = "showGhostRecipe", at = @At("HEAD"))
-    public void showGhostRecipe(Recipe<?> recipe, List<Slot> slots, CallbackInfo ci) {
+    public void showGhostRecipe(RecipeEntry<?> recipe, List<Slot> slots, CallbackInfo ci) {
         Recraftinator.setGhosting(true);
 //        var r = ghostSlots.getRecipe();
 //        if (r != null && r.getId() == recipe.getId()) {
