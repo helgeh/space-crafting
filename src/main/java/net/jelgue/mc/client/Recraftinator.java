@@ -50,7 +50,6 @@ public class Recraftinator { //implements IKeyboardInputHandler {
     public boolean onKeyInput(int keyCode, int scanCode, int modifiers, boolean eventKeyState) {
         if (keyCode == GLFW.GLFW_KEY_SPACE && eventKeyState) {
             spacePressed = true;
-            return true;
         }
         return false;
     }
