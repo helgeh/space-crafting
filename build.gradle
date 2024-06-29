@@ -15,7 +15,7 @@ repositories {
 
 	// maven { url "https://maven.shedaniel.me/" }
 
-	maven { url 'https://masa.dy.fi/maven' }
+	// maven { url 'https://masa.dy.fi/maven' }
 	maven { url 'https://maven.terraformersmc.com/releases/' }
 
 	//maven { url "https://maven.terraformersmc.com/releases/" }
@@ -40,7 +40,7 @@ dependencies {
 	// modApi "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
 	// include "me.shedaniel.cloth.api:cloth-api:${project.cloth_api_version}"
 
-	modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
+	// modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.minecraft_version}:${project.malilib_version}"
 //	modRuntimeOnly "fi.dy.masa.malilib:malilib-fabric-1.19.4:0.15.4"
 //	modCompileOnly "fi.dy.masa.malilib:malilib-fabric-1.19.4:0.15.4"
 

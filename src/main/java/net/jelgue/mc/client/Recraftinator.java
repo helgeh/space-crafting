@@ -1,8 +1,5 @@
 package net.jelgue.mc.client;
 
-import fi.dy.masa.malilib.event.InputEventHandler;
-import fi.dy.masa.malilib.hotkeys.IKeyboardInputHandler;
-import fi.dy.masa.malilib.util.KeyCodes;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -11,8 +8,9 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.ScreenHandler;
+import org.lwjgl.glfw.GLFW;
 
-public class Recraftinator implements IKeyboardInputHandler {
+public class Recraftinator { //implements IKeyboardInputHandler {
 
     private static final Recraftinator INSTANCE = new Recraftinator();
     private static boolean ghosting;
@@ -38,7 +36,7 @@ public class Recraftinator implements IKeyboardInputHandler {
             }
         });
 
-        InputEventHandler.getInputManager().registerKeyboardInputHandler(this);
+        // InputEventHandler.getInputManager().registerKeyboardInputHandler(this);
     }
 
     public static Recraftinator getInstance() {
@@ -50,8 +48,10 @@ public class Recraftinator implements IKeyboardInputHandler {
     }
 
     public boolean onKeyInput(int keyCode, int scanCode, int modifiers, boolean eventKeyState) {
-        if (keyCode == KeyCodes.KEY_SPACE && eventKeyState)
+        if (keyCode == GLFW.GLFW_KEY_SPACE && eventKeyState) {
             spacePressed = true;
+            return true;
+        }
         return false;
     }
 

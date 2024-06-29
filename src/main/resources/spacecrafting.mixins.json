@@ -10,7 +10,8 @@
     "CraftingScreenHandlerMixin",
     "PlayerScreenHandlerMixin",
     "CraftingResultSlotMixin",
-    "RecipeBookWidgetMixin"
+    "RecipeBookWidgetMixin",
+    "KeyboardMixin"
   ],
   "injectors": {
     "defaultRequire": 1
